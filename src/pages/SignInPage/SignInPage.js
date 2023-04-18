@@ -1,17 +1,11 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
-import MyWalletLogo from "../../components/MyWalletLogo"
+import SignInForm from "./SignInForm"
 
 export default function SignInPage() {
   return (
     <SingInContainer>
-      <form>
-        <MyWalletLogo />
-        <input placeholder="E-mail" type="email" />
-        <input placeholder="Senha" type="password" autocomplete="new-password" />
-        <button>Entrar</button>
-      </form>
-
+      <SignInForm />
       <Link to={"/cadastro"}>
         Primeira vez? Cadastre-se!
       </Link>

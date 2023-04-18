@@ -53,6 +53,10 @@ const GlobalStyle = createGlobalStyle`
         text-decoration: none;
         padding-top: 30px;
     }
+    :disabled {
+        opacity: 0.7;
+        background-color: lightgray;
+    }
 `
 
 export default GlobalStyle

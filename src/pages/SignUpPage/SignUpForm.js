@@ -20,6 +20,11 @@ export default function SignUpForm() {
     function sendNewProfile(e) {
         e.preventDefault();
 
+        if(form.password !== form.checkPassword) {
+            alert("Senhas diferentes!");
+            return;
+        }
+
         setDisabled(true);
 
         apiAuth.signUp(form)
