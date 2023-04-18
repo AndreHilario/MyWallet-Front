@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
-import MyWalletLogo from "../components/MyWalletLogo"
+import MyWalletLogo from "../../components/MyWalletLogo"
 
 export default function SignInPage() {
   return (
@@ -12,7 +12,7 @@ export default function SignInPage() {
         <button>Entrar</button>
       </form>
 
-      <Link>
+      <Link to={"/cadastro"}>
         Primeira vez? Cadastre-se!
       </Link>
     </SingInContainer>
