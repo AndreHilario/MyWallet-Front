@@ -1,7 +1,6 @@
 import MyWalletLogo from "../../components/MyWalletLogo";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import apiAuth from "../../services/apiAuth";
-import { useContext } from "react/cjs/react.production.min";
 import { UserContext } from "../../contexts/UserContext";
 
 
@@ -9,6 +8,8 @@ export default function SignInForm() {
 
     const [form, setForm] = useState({ name: "", email: "" });
     const [disabled, setDisabled] = useState(false);
+
+    const { email, password } = form;
 
     const { setUser } = useContext(UserContext);
 
@@ -26,9 +27,11 @@ export default function SignInForm() {
                 const { token } = res.data;
                 setUser({ token });
                 localStorage.setItem("user", JSON.stringify({ token }));
+                setDisabled(false)
 
             })
             .catch((err) => {
+                setDisabled(false)
                 alert(err.message)
             });
     }
@@ -52,7 +55,7 @@ export default function SignInForm() {
                 type="password"
                 autocomplete="new-password"
                 name="password"
-                value={email}
+                value={password}
                 onChange={handleForm}
                 required
                 disabled={disabled}
