@@ -2,16 +2,19 @@ import MyWalletLogo from "../../components/MyWalletLogo";
 import { useState, useContext } from "react";
 import apiAuth from "../../services/apiAuth";
 import { UserContext } from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 
 export default function SignInForm() {
 
-    const [form, setForm] = useState({ name: "", email: "" });
+    const [form, setForm] = useState({ email: "", password: "" });
     const [disabled, setDisabled] = useState(false);
 
     const { email, password } = form;
 
     const { setUser } = useContext(UserContext);
+
+    const navigate = useNavigate();
 
     function handleForm(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -24,15 +27,17 @@ export default function SignInForm() {
 
         apiAuth.signIn(form)
             .then((res) => {
-                const { token } = res.data;
-                setUser({ token });
-                localStorage.setItem("user", JSON.stringify({ token }));
-                setDisabled(false)
+                console.log(res.data)
+                const { name, token } = res.data;
+                setUser({ name, token });
+                localStorage.setItem("user", JSON.stringify({ name, token }));
+                setDisabled(false);
+                navigate("/home");
 
             })
             .catch((err) => {
-                setDisabled(false)
-                alert(err.message)
+                setDisabled(false);
+                alert(err.message);
             });
     }
 
@@ -53,7 +58,7 @@ export default function SignInForm() {
             <input
                 placeholder="Senha"
                 type="password"
-                autocomplete="new-password"
+                autoComplete="new-password"
                 name="password"
                 value={password}
                 onChange={handleForm}

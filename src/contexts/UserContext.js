@@ -6,16 +6,15 @@ export const UserContext = createContext();
 export default function UserProvider({ children }) {
 
     const localSUser = JSON.parse(localStorage.getItem("user"));
-    const [user, setUser] = useState(localSUser !== null ? localSUser : {});
+    const [user, setUser] = useState(localSUser !== null ? localSUser : "");
+
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (localSUser === null) {
+        if (!user) {
             navigate("/")
-        } else {
-            navigate("/home")
         }
-    }, [])
+    }, [user]);
 
     return (
         <UserContext.Provider value={{ user, setUser }}>

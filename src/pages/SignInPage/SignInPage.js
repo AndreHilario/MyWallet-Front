@@ -1,8 +1,13 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import SignInForm from "./SignInForm"
+import { port } from "../../services/apiAuth"
+
+
 
 export default function SignInPage() {
+
+  console.log(port)
   return (
     <SingInContainer>
       <SignInForm />

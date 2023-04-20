@@ -70,7 +70,7 @@ export default function SignUpForm() {
             <input
                 placeholder="Senha"
                 type="password"
-                autocomplete="new-password"
+                autoComplete="new-password"
                 name="password"
                 value={password}
                 onChange={handleForm}
@@ -82,7 +82,7 @@ export default function SignUpForm() {
             <input
                 placeholder="Confirme a senha"
                 type="password"
-                autocomplete="new-password"
+                autoComplete="new-password"
                 name="checkPassword"
                 value={checkPassword}
                 onChange={handleForm}

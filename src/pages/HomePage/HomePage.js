@@ -1,40 +1,40 @@
-import styled from "styled-components"
-import { BiExit } from "react-icons/bi"
-import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
+import styled from "styled-components";
+import { BiExit } from "react-icons/bi";
+import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import apiAuth from "../../services/apiAuth";
+import MenuHomePage from "./MenuHomePage";
 
 export default function HomePage() {
+
+  const [homeItems, setHomeItems] = useState([]);
+
+  const { user } = useContext(UserContext);
+  console.log(user)
+
+  useEffect(() => {
+
+    apiAuth
+      .getHomeItems(user.token)
+      .then((res) => {
+        setHomeItems(res.data);
+
+      })
+      .catch((err) => {
+        alert(err.message);
+      })
+
+  }, [user.token]);
+
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, Fulano</h1>
+        <h1>Olá, {user.name}</h1>
         <BiExit />
       </Header>
 
-      <TransactionsContainer>
-        <ul>
-          <ListItemContainer>
-            <div>
-              <span>30/11</span>
-              <strong>Almoço mãe</strong>
-            </div>
-            <Value color={"negativo"}>120,00</Value>
-          </ListItemContainer>
-
-          <ListItemContainer>
-            <div>
-              <span>15/11</span>
-              <strong>Salário</strong>
-            </div>
-            <Value color={"positivo"}>3000,00</Value>
-          </ListItemContainer>
-        </ul>
-
-        <article>
-          <strong>Saldo</strong>
-          <Value color={"positivo"}>2880,00</Value>
-        </article>
-      </TransactionsContainer>
-
+      <MenuHomePage homeItems={homeItems} />
 
       <ButtonsContainer>
         <button>
@@ -65,24 +65,6 @@ const Header = styled.header`
   font-size: 26px;
   color: white;
 `
-const TransactionsContainer = styled.article`
-  flex-grow: 1;
-  background-color: #fff;
-  color: #000;
-  border-radius: 5px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  article {
-    display: flex;
-    justify-content: space-between;   
-    strong {
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-  }
-`
 const ButtonsContainer = styled.section`
   margin-top: 15px;
   margin-bottom: 0;
@@ -101,21 +83,4 @@ const ButtonsContainer = styled.section`
       font-size: 18px;
     }
   }
-`
-const Value = styled.div`
-  font-size: 16px;
-  text-align: right;
-  color: ${(props) => (props.color === "positivo" ? "green" : "red")};
-`
-const ListItemContainer = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  color: #000000;
-  margin-right: 10px;
-  div span {
-    color: #c6c6c6;
-    margin-right: 10px;
-  }
-`
+`;
