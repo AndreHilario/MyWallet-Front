@@ -18,21 +18,27 @@ export default function MenuHomePage({ homeItems }) {
 
   return (
     <TransactionsContainer>
-      <ul>
-        {homeItems.map((value) => {
-          return (
-            <ListItemContainer key={value._id}>
-              <div>
-                <span>{value.date}</span>
-                <strong>{value.description}</strong>
-              </div>
-              <Value status={value.status}>{value.price}</Value>
-            </ListItemContainer>
-          )
-        })}
+      {
+        homeItems.length === 0 ?
+          <ListItemEmpty>
+            <p>Não há registros de <br />entrada ou saída</p>
+          </ListItemEmpty>
+          :
+          <ul>
+            {homeItems.map((value) => {
+              return (
+                <ListItemContainer key={value._id}>
+                  <div>
+                    <span>{value.date}</span>
+                    <strong>{value.description}</strong>
+                  </div>
+                  <Value status={value.status}>{value.price}</Value>
+                </ListItemContainer>
+              )
+            })}
 
-      </ul>
-
+          </ul>
+      }
       <article>
         <strong>Saldo</strong>
         <Value status={(sumPositive - sumNegative) > 0 ? "entrada" : "saida"}>{balance.toFixed(2)}</Value>
@@ -74,5 +80,19 @@ const TransactionsContainer = styled.article`
       font-weight: 700;
       text-transform: uppercase;
     }
+  }
+`;
+
+const ListItemEmpty = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  p {
+    font-size: 22px;
+    color: gray;
+    text-align: center;
+    line-height: 26px;
+    align-self: center;
   }
 `;
