@@ -7,13 +7,14 @@ export default function MenuHomePage({ homeItems }) {
 
   homeItems.forEach((value) => {
     if (value.status === "entrada") {
-      sumPositive += value.price;
+      sumPositive += parseFloat(value.price);
     } else {
-      sumNegative += value.price;
+      sumNegative += parseFloat(value.price);
     }
   });
 
   const balance = Math.abs(sumPositive - sumNegative);
+  console.log(balance)
 
   return (
     <TransactionsContainer>
@@ -34,7 +35,7 @@ export default function MenuHomePage({ homeItems }) {
 
       <article>
         <strong>Saldo</strong>
-        <Value status={(sumPositive - sumNegative) > 0 ? "entrada" : "saida"}>{balance}</Value>
+        <Value status={(sumPositive - sumNegative) > 0 ? "entrada" : "saida"}>{balance.toFixed(2)}</Value>
       </article>
     </TransactionsContainer>
   )

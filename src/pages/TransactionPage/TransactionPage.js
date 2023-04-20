@@ -1,17 +1,18 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import TransactionForm from "./TransactionForm";
 
 export default function TransactionsPage() {
+
+
   return (
     <TransactionsContainer>
       <h1>Nova TRANSAÇÃO</h1>
-      <form>
-        <input placeholder="Valor" type="text"/>
-        <input placeholder="Descrição" type="text" />
-        <button>Salvar TRANSAÇÃO</button>
-      </form>
+
+      <TransactionForm />
+
     </TransactionsContainer>
   )
-}
+};
 
 const TransactionsContainer = styled.main`
   height: calc(100vh - 50px);
@@ -24,4 +25,4 @@ const TransactionsContainer = styled.main`
     align-self: flex-start;
     margin-bottom: 40px;
   }
-`
+`;

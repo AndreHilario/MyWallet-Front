@@ -26,5 +26,13 @@ function getHomeItems(token) {
     return response;
 };
 
-const apiAuth = { signIn, signUp, getHomeItems };
+function postTransaction(tipo, form, token) {
+
+    const config = getConfig(token);
+
+    const promise = axios.post(`${port}/nova-transacao/${tipo}`, form, config);
+    return promise;
+}
+
+const apiAuth = { signIn, signUp, getHomeItems, postTransaction };
 export default apiAuth;

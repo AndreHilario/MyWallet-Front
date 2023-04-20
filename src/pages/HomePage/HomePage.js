@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { BiExit } from "react-icons/bi";
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import apiAuth from "../../services/apiAuth";
 import MenuHomePage from "./MenuHomePage";
+import { Link } from "react-router-dom";
+import Logout from "../../components/Logout";
 
 export default function HomePage() {
 
@@ -31,19 +32,25 @@ export default function HomePage() {
     <HomeContainer>
       <Header>
         <h1>Olá, {user.name}</h1>
-        <BiExit />
+        <Logout />
       </Header>
 
       <MenuHomePage homeItems={homeItems} />
 
       <ButtonsContainer>
+
         <button>
-          <AiOutlinePlusCircle />
-          <p>Nova <br /> entrada</p>
+          <Link to={"/nova-transacao/:entrada"}>
+            <AiOutlinePlusCircle />
+            <p>Nova <br /> entrada</p>
+          </Link>
         </button>
+
         <button>
-          <AiOutlineMinusCircle />
-          <p>Nova <br />saída</p>
+          <Link to={"/nova-transacao/:saida"}>
+            <AiOutlineMinusCircle />
+            <p>Nova <br /> saída</p>
+          </Link>
         </button>
       </ButtonsContainer>
 
