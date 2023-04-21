@@ -27,7 +27,6 @@ export default function SignInForm() {
 
         apiAuth.signIn(form)
             .then((res) => {
-                console.log(res.data)
                 const { name, token } = res.data;
                 setUser({ name, token });
                 localStorage.setItem("user", JSON.stringify({ name, token }));

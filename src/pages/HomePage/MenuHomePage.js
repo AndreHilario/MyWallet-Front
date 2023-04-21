@@ -2,6 +2,7 @@ import styled from "styled-components";
 import apiAuth from "../../services/apiAuth";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { Link } from "react-router-dom";
 
 
 export default function MenuHomePage() {
@@ -51,7 +52,7 @@ export default function MenuHomePage() {
 
   function deleteItem(id) {
 
-    if (window.confirm()) {
+    if (window.confirm("Quer mesmo deletar uma transação ?")) {
 
       apiAuth
         .deleteTransaction(user.token, id)
@@ -81,7 +82,9 @@ export default function MenuHomePage() {
                 <ListItemContainer key={value._id}>
                   <div>
                     <span>{value.date}</span>
-                    <strong>{value.description}</strong>
+                    <strong>
+                      <Link to={`/editar-registro/${value.status}`}>{value.description}</Link>
+                    </strong>
                   </div>
                   <Value status={value.status}>{value.price} <span onClick={() => deleteItem(value._id)}>X</span></Value>
                 </ListItemContainer>
@@ -101,6 +104,9 @@ export default function MenuHomePage() {
 const Value = styled.div`
   font-size: 16px;
   color: ${(props) => (props.status === "entrada" ? "green" : props.status === "saida" ? "red" : "black")};
+  span {
+    margin-left: 10px;
+  }
 `;
 const ListItemContainer = styled.li`
   display: flex;
@@ -112,8 +118,15 @@ const ListItemContainer = styled.li`
     color: #c6c6c6;
     margin-right: 10px;
   }
-  span {
-    margin-left: 10px;
+  a {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 18px;
+    color: #000000;
+    text-decoration: none;
+    padding-top: 30px;
   }
 `;
 const TransactionsContainer = styled.article`

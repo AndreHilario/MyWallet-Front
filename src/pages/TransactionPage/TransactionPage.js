@@ -2,9 +2,10 @@ import styled from "styled-components";
 import TransactionForm from "./TransactionForm";
 import { useParams } from "react-router-dom";
 
-export default function TransactionsPage() {
+export default function TransactionPage() {
 
-  const { tipo } = useParams();
+  let { tipo } = useParams();
+  tipo = tipo.replace(":", "");
   let tipoFixed = tipo.replace(":", "");
 
   if (tipoFixed === "saida") {
@@ -16,7 +17,7 @@ export default function TransactionsPage() {
     <TransactionsContainer>
       <h1>Nova {tipoFixed}</h1>
 
-      <TransactionForm tipoFixed={tipoFixed} />
+      <TransactionForm tipo={tipo} tipoFixed={tipoFixed} />
 
     </TransactionsContainer>
   )

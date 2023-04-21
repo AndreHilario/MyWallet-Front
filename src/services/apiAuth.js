@@ -42,5 +42,13 @@ function deleteTransaction(token, id) {
     return promise;
 }
 
-const apiAuth = { signIn, signUp, getHomeItems, postTransaction, deleteTransaction };
+function editTransaction(tipo, form, token) {
+
+    const config = getConfig(token);
+
+    const promise = axios.put(`${port}/editar-registro/${tipo}`, form, config);
+    return promise;
+};
+
+const apiAuth = { signIn, signUp, getHomeItems, postTransaction, deleteTransaction, editTransaction };
 export default apiAuth;

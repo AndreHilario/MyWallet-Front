@@ -5,6 +5,8 @@ import SignInPage from "./pages/SignInPage/SignInPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import TransactionsPage from "./pages/TransactionPage/TransactionPage";
 import UserProvider from "./contexts/UserContext";
+import TransactionProvider from "./contexts/TransactionContext";
+import EditPage from "./pages/EditPage/EditPage";
 
 export default function App() {
 
@@ -12,12 +14,15 @@ export default function App() {
     <PagesContainer>
       <BrowserRouter>
         <UserProvider>
-          <Routes>
-            <Route path="/" element={<SignInPage />} />
-            <Route path="/cadastro" element={<SignUpPage />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/nova-transacao/:tipo" element={<TransactionsPage />} />
-          </Routes>
+          <TransactionProvider>
+            <Routes>
+              <Route path="/" element={<SignInPage />} />
+              <Route path="/cadastro" element={<SignUpPage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/nova-transacao/:tipo" element={<TransactionsPage />} />
+              <Route path="/editar-registro/:tipo" element={<EditPage />} />
+            </Routes>
+          </TransactionProvider>
         </UserProvider>
       </BrowserRouter>
     </PagesContainer>
