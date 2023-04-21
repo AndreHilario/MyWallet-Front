@@ -14,7 +14,7 @@ export default function MenuHomePage({ homeItems }) {
   });
 
   const balance = Math.abs(sumPositive - sumNegative);
-  console.log(balance)
+  const formattedBalance = balance.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
   return (
     <TransactionsContainer>
@@ -41,7 +41,7 @@ export default function MenuHomePage({ homeItems }) {
       }
       <article>
         <strong>Saldo</strong>
-        <Value status={(sumPositive - sumNegative) > 0 ? "entrada" : "saida"}>{balance.toFixed(2)}</Value>
+        <Value status={(sumPositive - sumNegative) > 0 ? "entrada" : ((sumPositive - sumNegative) < 0 ? "saida" : "equal")}>{formattedBalance}</Value>
       </article>
     </TransactionsContainer>
   )
@@ -50,8 +50,8 @@ export default function MenuHomePage({ homeItems }) {
 const Value = styled.div`
   font-size: 16px;
   text-align: right;
-  color: ${(props) => (props.status === "entrada" ? "green" : "red")};
-`
+  color: ${(props) => (props.status === "entrada" ? "green" : props.status === "saida" ? "red" : "black")};
+`;
 const ListItemContainer = styled.li`
   display: flex;
   justify-content: space-between;
