@@ -1,12 +1,9 @@
 import { useContext, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import apiAuth from "../../services/apiAuth";
 import { UserContext } from "../../contexts/UserContext";
 
-export default function TransactionForm() {
-
-    const { tipo } = useParams();
-    const tipoFixed = tipo.replace(":", "");
+export default function TransactionForm({ tipoFixed }) {
 
     const [form, setForm] = useState({ price: "", description: "" });
     const [disabled, setDisabled] = useState(false);
@@ -39,6 +36,7 @@ export default function TransactionForm() {
     };
 
     return (
+
         <form onSubmit={salveTransaction}>
             <input
                 placeholder="Valor"
