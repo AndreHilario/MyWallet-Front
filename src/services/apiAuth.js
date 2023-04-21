@@ -32,7 +32,15 @@ function postTransaction(tipo, form, token) {
 
     const promise = axios.post(`${port}/nova-transacao/${tipo}`, form, config);
     return promise;
+};
+
+function deleteTransaction(token, id) {
+
+    const config = getConfig(token);
+
+    const promise = axios.delete(`${port}/home/${id}`, config);
+    return promise;
 }
 
-const apiAuth = { signIn, signUp, getHomeItems, postTransaction };
+const apiAuth = { signIn, signUp, getHomeItems, postTransaction, deleteTransaction };
 export default apiAuth;

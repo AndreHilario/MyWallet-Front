@@ -1,20 +1,71 @@
 import styled from "styled-components";
+import apiAuth from "../../services/apiAuth";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
-export default function MenuHomePage({ homeItems }) {
 
-  let sumPositive = 0;
-  let sumNegative = 0;
+export default function MenuHomePage() {
 
-  homeItems.forEach((value) => {
-    if (value.status === "entrada") {
-      sumPositive += parseFloat(value.price);
-    } else {
-      sumNegative += parseFloat(value.price);
+  const [reloadPage, setReloadPage] = useState(0);
+  const [homeItems, setHomeItems] = useState([]);
+  const [formattedBalance, setFormattedBalance] = useState("0");
+  const [sumOut, setSumOut] = useState(0);
+  const [sumIn, setSumIn] = useState(0);
+
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+
+    apiAuth
+      .getHomeItems(user.token)
+      .then((res) => {
+        setHomeItems(res.data);
+
+        let sumPositive = 0;
+        let sumNegative = 0;
+
+        homeItems.forEach((value) => {
+          if (value.status === "entrada") {
+            sumPositive += parseFloat(value.price);
+          } else {
+            sumNegative += parseFloat(value.price);
+          }
+        });
+
+        const balance = Math.abs(sumPositive - sumNegative);
+        const newBalance = balance.toLocaleString("pt-BR", {
+          minimumFractionDigits: 2,
+        });
+
+        setFormattedBalance(newBalance);
+        setSumIn(sumPositive);
+        setSumOut(sumNegative);
+
+      })
+      .catch((err) => {
+        alert(err.response.data);
+      })
+
+  }, [reloadPage, user.token, homeItems]);
+
+
+  function deleteItem(id) {
+
+    if (window.confirm()) {
+
+      apiAuth
+        .deleteTransaction(user.token, id)
+        .then(() => {
+          let refreshWindow = reloadPage + 1;
+          setReloadPage(refreshWindow);
+        })
+        .catch((err) => {
+          alert(err.response.data)
+        })
     }
-  });
 
-  const balance = Math.abs(sumPositive - sumNegative);
-  const formattedBalance = balance.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
+  }
 
   return (
     <TransactionsContainer>
@@ -32,7 +83,7 @@ export default function MenuHomePage({ homeItems }) {
                     <span>{value.date}</span>
                     <strong>{value.description}</strong>
                   </div>
-                  <Value status={value.status}>{value.price}</Value>
+                  <Value status={value.status}>{value.price} <span onClick={() => deleteItem(value._id)}>X</span></Value>
                 </ListItemContainer>
               )
             })}
@@ -41,7 +92,7 @@ export default function MenuHomePage({ homeItems }) {
       }
       <article>
         <strong>Saldo</strong>
-        <Value status={(sumPositive - sumNegative) > 0 ? "entrada" : ((sumPositive - sumNegative) < 0 ? "saida" : "equal")}>{formattedBalance}</Value>
+        <Value status={(sumIn - sumOut) > 0 ? "entrada" : ((sumIn - sumOut) < 0 ? "saida" : "equal")}>{formattedBalance}</Value>
       </article>
     </TransactionsContainer>
   )
@@ -49,7 +100,6 @@ export default function MenuHomePage({ homeItems }) {
 
 const Value = styled.div`
   font-size: 16px;
-  text-align: right;
   color: ${(props) => (props.status === "entrada" ? "green" : props.status === "saida" ? "red" : "black")};
 `;
 const ListItemContainer = styled.li`
@@ -58,10 +108,12 @@ const ListItemContainer = styled.li`
   align-items: center;
   margin-bottom: 8px;
   color: #000000;
-  margin-right: 10px;
   div span {
     color: #c6c6c6;
     margin-right: 10px;
+  }
+  span {
+    margin-left: 10px;
   }
 `;
 const TransactionsContainer = styled.article`

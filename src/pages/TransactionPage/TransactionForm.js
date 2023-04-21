@@ -58,7 +58,7 @@ export default function TransactionForm() {
                 required
                 disabled={disabled}
             />
-            <button type="submit">Salvar TRANSAÇÃO</button>
+            <button type="submit">Salvar {tipoFixed}</button>
         </form>
     )
 };
