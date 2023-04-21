@@ -12,7 +12,6 @@ export default function HomePage() {
   const [homeItems, setHomeItems] = useState([]);
 
   const { user } = useContext(UserContext);
-  console.log(user)
 
   useEffect(() => {
 
@@ -23,7 +22,7 @@ export default function HomePage() {
 
       })
       .catch((err) => {
-        alert(err.message);
+        alert(err.response.data);
       })
 
   }, [user.token]);

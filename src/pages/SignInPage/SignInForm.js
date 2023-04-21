@@ -37,7 +37,7 @@ export default function SignInForm() {
             })
             .catch((err) => {
                 setDisabled(false);
-                alert(err.message);
+                alert(err.response.data);
             });
     }
 

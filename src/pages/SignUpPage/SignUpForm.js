@@ -35,7 +35,7 @@ export default function SignUpForm() {
             })
             .catch((err) => {
                 setDisabled(false)
-                alert(err.response)
+                alert(err.response.data)
             })
 
 
