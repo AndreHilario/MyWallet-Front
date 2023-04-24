@@ -10,8 +10,6 @@ export default function EditPageForm({ tipo, tipoFixed, id }) {
     const { state } = useLocation();
 
     const [form, setForm] = useState({ price: state?.price || "", description: state?.description || "" });
-    console.log(form)
-    console.log(state)
 
     const [disabled, setDisabled] = useState(false);
 

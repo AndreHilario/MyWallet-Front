@@ -29,7 +29,6 @@ export default function SignUpForm() {
 
         apiAuth.signUp(form)
             .then((res) => {
-                console.log(res)
                 setDisabled(false)
                 navigate("/")
             })
