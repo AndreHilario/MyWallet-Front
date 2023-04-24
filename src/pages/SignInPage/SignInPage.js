@@ -3,8 +3,6 @@ import { Link } from "react-router-dom"
 import SignInForm from "./SignInForm"
 import { port } from "../../services/apiAuth"
 
-
-
 export default function SignInPage() {
 
   console.log(port)
@@ -16,7 +14,7 @@ export default function SignInPage() {
       </Link>
     </SingInContainer>
   )
-}
+};
 
 const SingInContainer = styled.section`
   height: 100vh;
@@ -24,4 +22,4 @@ const SingInContainer = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`
+`;
