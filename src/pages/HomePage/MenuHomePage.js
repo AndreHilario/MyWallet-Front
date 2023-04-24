@@ -83,7 +83,7 @@ export default function MenuHomePage() {
                   <div>
                     <span>{value.date}</span>
                     <strong>
-                      <Link to={`/editar-registro/${value.status}`}>{value.description}</Link>
+                      <Link to={{ pathname: `/editar-registro/${value.status}/${value._id}`, state: { price: value.price, description: value.description } }}>{value.description}</Link>
                     </strong>
                   </div>
                   <Value status={value.status}>{value.price} <span onClick={() => deleteItem(value._id)}>X</span></Value>
@@ -104,6 +104,7 @@ export default function MenuHomePage() {
 const Value = styled.div`
   font-size: 16px;
   color: ${(props) => (props.status === "entrada" ? "green" : props.status === "saida" ? "red" : "black")};
+  margin-top: 10px;
   span {
     margin-left: 10px;
   }
@@ -138,10 +139,13 @@ const TransactionsContainer = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  max-height: 1000px;
+  overflow-y: auto; 
   article {
     display: flex;
     justify-content: space-between;   
     strong {
+      margin-top: 10px;
       font-weight: 700;
       text-transform: uppercase;
     }

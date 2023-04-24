@@ -1,15 +1,18 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import apiAuth from "../../services/apiAuth";
 import { UserContext } from "../../contexts/UserContext";
-import { TransactionContext } from "../../contexts/TransactionContext";
 
-export default function EditPageForm({ tipo, tipoFixed }) {
+export default function EditPageForm({ tipo, tipoFixed, id }) {
 
     const { user } = useContext(UserContext);
-    const { transaction } = useContext(TransactionContext);
 
-    const [form, setForm] = useState({ price: transaction.price, description: transaction.description });
+    const { state } = useLocation();
+
+    const [form, setForm] = useState({ price: state?.price || "", description: state?.description || "" });
+    console.log(form)
+    console.log(state)
+
     const [disabled, setDisabled] = useState(false);
 
     const { price, description } = form;
@@ -26,7 +29,7 @@ export default function EditPageForm({ tipo, tipoFixed }) {
         setDisabled(true);
 
         apiAuth
-            .editTransaction(tipo, form, user.token)
+            .editTransaction(tipo, form, user.token, id)
             .then(() => {
                 setDisabled(false);
                 navigate("/home");
@@ -44,7 +47,7 @@ export default function EditPageForm({ tipo, tipoFixed }) {
                 placeholder="Valor"
                 type="text"
                 name="price"
-                value={form && price}
+                value={price}
                 onChange={handleForm}
                 required
                 disabled={disabled}
@@ -53,7 +56,7 @@ export default function EditPageForm({ tipo, tipoFixed }) {
                 placeholder="Descrição"
                 type="text"
                 name="description"
-                value={form && description}
+                value={description}
                 onChange={handleForm}
                 required
                 disabled={disabled}

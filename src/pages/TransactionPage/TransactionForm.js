@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiAuth from "../../services/apiAuth";
 import { UserContext } from "../../contexts/UserContext";
-import { TransactionContext } from "../../contexts/TransactionContext";
 
 export default function TransactionForm({ tipo, tipoFixed }) {
 
@@ -12,7 +11,6 @@ export default function TransactionForm({ tipo, tipoFixed }) {
     const { price, description } = form;
 
     const { user } = useContext(UserContext);
-    const { setTransaction } = useContext(TransactionContext);
 
     const navigate = useNavigate();
 
@@ -28,10 +26,8 @@ export default function TransactionForm({ tipo, tipoFixed }) {
         apiAuth
             .postTransaction(tipo, form, user.token)
             .then((res) => {
-                const { price, description } = res.data;
-                setTransaction({ price, description });
                 setDisabled(false);
-                navigate("/home");
+                navigate("/home", { state: { price, description } });
             })
             .catch((err) => {
                 setDisabled(false);

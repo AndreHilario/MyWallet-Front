@@ -4,23 +4,22 @@ import { useParams } from "react-router-dom";
 
 export default function EditPage() {
 
-    let { tipo } = useParams();
-    tipo = tipo.replace(":", "");
-    let tipoFixed = tipo.replace(":", "");
+  let { tipo, id } = useParams();
+  tipo = tipo.replace(":", "");
+  let tipoFixed = tipo.replace(":", "");
 
-    if (tipoFixed === "saida") {
-        tipoFixed = "saída";
-    }
+  if (tipoFixed === "saida") {
+    tipoFixed = "saída";
+  }
 
+  return (
+    <EditTransactionsContainer>
+      <h1>Editar {tipoFixed}</h1>
 
-    return (
-        <EditTransactionsContainer>
-            <h1>Editar {tipoFixed}</h1>
+      <EditPageForm tipo={tipo} id={id} tipoFixed={tipoFixed} />
 
-            <EditPageForm tipo={tipo} tipoFixed={tipoFixed} />
-
-        </EditTransactionsContainer>
-    )
+    </EditTransactionsContainer>
+  )
 };
 
 const EditTransactionsContainer = styled.main`

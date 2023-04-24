@@ -42,11 +42,11 @@ function deleteTransaction(token, id) {
     return promise;
 }
 
-function editTransaction(tipo, form, token) {
+function editTransaction(tipo, form, token, id) {
 
     const config = getConfig(token);
 
-    const promise = axios.put(`${port}/editar-registro/${tipo}`, form, config);
+    const promise = axios.put(`${port}/editar-registro/${tipo}/${id}`, form, config);
     return promise;
 };
 
