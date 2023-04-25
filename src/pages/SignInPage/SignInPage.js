@@ -1,7 +1,6 @@
-import styled from "styled-components"
-import { Link } from "react-router-dom"
-import SignInForm from "./SignInForm"
-import { port } from "../../services/apiAuth"
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import SignInForm from "./SignInForm";
 
 export default function SignInPage() {
 

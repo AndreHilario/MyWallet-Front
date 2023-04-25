@@ -25,7 +25,7 @@ export default function TransactionForm({ tipo, tipoFixed }) {
 
         apiAuth
             .postTransaction(tipo, form, user.token)
-            .then((res) => {
+            .then(() => {
                 setDisabled(false);
                 navigate("/home", { state: { price, description } });
             })

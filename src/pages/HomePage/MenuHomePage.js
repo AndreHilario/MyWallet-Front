@@ -1,9 +1,8 @@
-import styled from "styled-components";
 import apiAuth from "../../services/apiAuth";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { Link } from "react-router-dom";
-
+import { ListItemContainer, ListItemEmpty, TransactionsContainer, Value } from "./styledMenu";
 
 export default function MenuHomePage() {
 
@@ -45,14 +44,14 @@ export default function MenuHomePage() {
       })
       .catch((err) => {
         alert(err.response.data);
-      })
+      });
 
   }, [reloadPage, user.token, homeItems]);
 
 
-  function deleteItem(id) {
+  function deleteItem(id, status, price, description) {
 
-    if (window.confirm("Quer mesmo deletar uma transação ?")) {
+    if (window.confirm(`Você selecionou a transação de ${status}, com valor ${price} e descrição ${description}, certeza ao deletar ?`)) {
 
       apiAuth
         .deleteTransaction(user.token, id)
@@ -62,7 +61,7 @@ export default function MenuHomePage() {
         })
         .catch((err) => {
           alert(err.response.data)
-        })
+        });
     }
 
 
@@ -86,7 +85,9 @@ export default function MenuHomePage() {
                       <Link to={{ pathname: `/editar-registro/${value.status}/${value._id}`, state: { price: value.price, description: value.description } }}>{value.description}</Link>
                     </strong>
                   </div>
-                  <Value status={value.status}>{value.price} <span onClick={() => deleteItem(value._id)}>X</span></Value>
+                  <Value status={value.status}>{value.price}
+                    <span onClick={() => deleteItem(value._id, value.status, value.price, value.description)}>X</span>
+                  </Value>
                 </ListItemContainer>
               )
             })}
@@ -95,73 +96,10 @@ export default function MenuHomePage() {
       }
       <article>
         <strong>Saldo</strong>
-        <Value status={(sumIn - sumOut) > 0 ? "entrada" : ((sumIn - sumOut) < 0 ? "saida" : "equal")}>{formattedBalance}</Value>
+        <Value status={(sumIn - sumOut) > 0 ? "entrada" : ((sumIn - sumOut) < 0 ? "saida" : "equal")}>{
+          formattedBalance}
+        </Value>
       </article>
     </TransactionsContainer>
   )
 };
-
-const Value = styled.div`
-  font-size: 16px;
-  color: ${(props) => (props.status === "entrada" ? "green" : props.status === "saida" ? "red" : "black")};
-  margin-top: 10px;
-  span {
-    margin-left: 10px;
-  }
-`;
-const ListItemContainer = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  color: #000000;
-  div span {
-    color: #c6c6c6;
-    margin-right: 10px;
-  }
-  a {
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 18px;
-    color: #000000;
-    text-decoration: none;
-    padding-top: 30px;
-  }
-`;
-const TransactionsContainer = styled.article`
-  flex-grow: 1;
-  background-color: #fff;
-  color: #000;
-  border-radius: 5px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  max-height: 1000px;
-  overflow-y: auto; 
-  article {
-    display: flex;
-    justify-content: space-between;   
-    strong {
-      margin-top: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-  }
-`;
-
-const ListItemEmpty = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  p {
-    font-size: 22px;
-    color: gray;
-    text-align: center;
-    line-height: 26px;
-    align-self: center;
-  }
-`;

@@ -12,9 +12,9 @@ export default function UserProvider({ children }) {
 
     useEffect(() => {
         if (!user) {
-            navigate("/")
+            navigate("/");
         }
-    }, [user]);
+    }, [user, navigate]);
 
     return (
         <UserContext.Provider value={{ user, setUser }}>

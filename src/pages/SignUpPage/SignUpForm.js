@@ -21,21 +21,21 @@ export default function SignUpForm() {
         e.preventDefault();
 
         if(form.password !== form.checkPassword) {
-            alert("Senhas diferentes!");
+            alert("Different passwords!");
             return;
         }
 
         setDisabled(true);
 
         apiAuth.signUp(form)
-            .then((res) => {
+            .then(() => {
                 setDisabled(false)
                 navigate("/")
             })
             .catch((err) => {
                 setDisabled(false)
                 alert(err.response.data)
-            })
+            });
 
 
     }

@@ -14,7 +14,7 @@ export default function SignUpPage() {
       </Link>
     </SingUpContainer>
   )
-}
+};
 
 const SingUpContainer = styled.section`
   height: 100vh;
